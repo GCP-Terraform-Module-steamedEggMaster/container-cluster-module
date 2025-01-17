@@ -10,7 +10,7 @@ module "subnet" {
   name    = "test-subnetwork"
   network = module.vpc.id
 
-  ip_cidr_range           = "10.0.0.0/24"
+  ip_cidr_range            = "10.0.0.0/24"
   region                   = "asia-northeast3"
   private_ip_google_access = true
 
