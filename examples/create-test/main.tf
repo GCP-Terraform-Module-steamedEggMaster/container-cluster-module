@@ -47,7 +47,6 @@ module "cluster" {
   deletion_protection = false
   networking_mode     = "VPC_NATIVE"
 
-  # 애드온 설정
   addons_config = {
     horizontal_pod_autoscaling = { disabled = true }
     http_load_balancing        = { disabled = false }

@@ -151,7 +151,6 @@ variable "addons_config" {
   }
 }
 
-
 variable "vertical_pod_autoscaling" {
   description = "수직 Pod Autoscaling 설정입니다."
   type = object({
