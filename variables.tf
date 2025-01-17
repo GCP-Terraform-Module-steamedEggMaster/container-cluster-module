@@ -134,9 +134,9 @@ variable "ip_allocation_policy" {
 variable "addons_config" {
   description = "애드온 구성입니다."
   type = object({
-    horizontal_pod_autoscaling = optional(object({ disabled = bool }), null)
-    http_load_balancing        = optional(object({ disabled = bool }), null)
-    network_policy_config      = optional(object({ disabled = bool }), null)
+    horizontal_pod_autoscaling = optional(object({ disabled = bool }), { disabled = false })
+    http_load_balancing        = optional(object({ disabled = bool }), { disabled = false })
+    network_policy_config      = optional(object({ disabled = bool }), { disabled = false })
   })
   default = null
 }
