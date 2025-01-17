@@ -7,7 +7,7 @@ output "cluster_details" {
     subnetwork         = module.cluster.subnetwork
     services_ipv4_cidr = module.cluster.services_ipv4_cidr
     cluster_ipv4_cidr  = module.cluster.cluster_ipv4_cidr
-    node_pools         = module.cluster.node_pool
+    node_pools         = module.cluster.node_pools
     resource_labels    = module.cluster.resource_labels
     master_version     = module.cluster.master_version
     project            = module.cluster.project
