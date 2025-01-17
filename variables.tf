@@ -122,13 +122,19 @@ variable "private_ipv6_google_access" {
 variable "ip_allocation_policy" {
   description = "IP 할당 정책입니다."
   type = object({
-    cluster_secondary_range_name  = optional(string, null)   # 선택적 필드
-    services_secondary_range_name = optional(string, null)   # 선택적 필드
-    cluster_ipv4_cidr_block       = optional(string, null)   # 선택적 필드
-    services_ipv4_cidr_block      = optional(string, null)   # 선택적 필드
-    stack_type                    = optional(string, "IPV4") # IPV4_IPV6
+    cluster_secondary_range_name  = string
+    services_secondary_range_name = string
+    cluster_ipv4_cidr_block       = string
+    services_ipv4_cidr_block      = string
+    stack_type                    = string
   })
-  default = null
+  default = {
+    cluster_secondary_range_name  = null
+    services_secondary_range_name = null
+    cluster_ipv4_cidr_block       = null
+    services_ipv4_cidr_block      = null
+    stack_type                    = "IPV4"
+  }
 }
 
 variable "addons_config" {
@@ -138,15 +144,22 @@ variable "addons_config" {
     http_load_balancing        = object({ disabled = bool })
     network_policy_config      = object({ disabled = bool })
   })
-  default = null
+  default = { ## 이렇게 구성하면 원하는 값만 덮어쓰기 가능
+    horizontal_pod_autoscaling = { disabled = false }
+    http_load_balancing        = { disabled = false }
+    network_policy_config      = { disabled = false }
+  }
 }
+
 
 variable "vertical_pod_autoscaling" {
   description = "수직 Pod Autoscaling 설정입니다."
   type = object({
     enabled = bool
   })
-  default = null
+  default = {
+    enabled = false
+  }
 }
 
 variable "workload_identity_config" {
@@ -154,7 +167,9 @@ variable "workload_identity_config" {
   type = object({
     workload_pool = string
   })
-  default = null
+  default = {
+    workload_pool = null
+  }
 }
 
 variable "cluster_autoscaling" {
@@ -167,7 +182,14 @@ variable "cluster_autoscaling" {
       maximum       = number
     })
   })
-  default = null
+  default = {
+    enabled = false
+    resource_limits = {
+      resource_type = null
+      minimum       = null
+      maximum       = null
+    }
+  }
 }
 
 variable "private_cluster_config" {
@@ -177,7 +199,11 @@ variable "private_cluster_config" {
     enable_private_endpoint = bool
     master_ipv4_cidr_block  = string
   })
-  default = null
+  default = {
+    enable_private_nodes    = false
+    enable_private_endpoint = false
+    master_ipv4_cidr_block  = null
+  }
 }
 
 variable "release_channel" {
@@ -185,7 +211,9 @@ variable "release_channel" {
   type = object({
     channel = string
   })
-  default = null
+  default = {
+    channel = null
+  }
 }
 
 variable "notification_config" {
@@ -196,7 +224,12 @@ variable "notification_config" {
       topic   = string
     })
   })
-  default = null
+  default = {
+    pubsub = {
+      enabled = false
+      topic   = null
+    }
+  }
 }
 
 variable "logging_config" {
@@ -204,7 +237,9 @@ variable "logging_config" {
   type = object({
     enable_components = list(string)
   })
-  default = null
+  default = {
+    enable_components = []
+  }
 }
 
 variable "monitoring_config" {
@@ -212,7 +247,9 @@ variable "monitoring_config" {
   type = object({
     enable_components = list(string)
   })
-  default = null
+  default = {
+    enable_components = []
+  }
 }
 
 variable "database_encryption" {
@@ -221,7 +258,10 @@ variable "database_encryption" {
     state    = string
     key_name = string
   })
-  default = null
+  default = {
+    state    = "DECRYPTED"
+    key_name = null
+  }
 }
 
 variable "default_snat_status" {
@@ -229,7 +269,9 @@ variable "default_snat_status" {
   type = object({
     disabled = bool
   })
-  default = null
+  default = {
+    disabled = false
+  }
 }
 
 variable "dns_config" {
@@ -239,7 +281,11 @@ variable "dns_config" {
     cluster_dns_scope  = string
     cluster_dns_domain = string
   })
-  default = null
+  default = {
+    cluster_dns        = null
+    cluster_dns_scope  = null
+    cluster_dns_domain = null
+  }
 }
 
 variable "create" {
