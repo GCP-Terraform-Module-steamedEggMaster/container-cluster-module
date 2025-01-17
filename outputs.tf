@@ -16,18 +16,6 @@ output "cluster_ca_certificate" {
   value       = try(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, null)
 }
 
-# 클러스터 인증 정보 출력 (사용자 이름)
-output "username" {
-  description = "Kubernetes API 접근을 위한 기본 사용자 이름"
-  value       = try(google_container_cluster.cluster.master_auth[0].username, null)
-}
-
-# 클러스터 인증 정보 출력 (암호)
-output "password" {
-  description = "Kubernetes API 접근을 위한 기본 사용자 암호"
-  value       = try(google_container_cluster.cluster.master_auth[0].password, null)
-}
-
 # 네트워크 정보
 output "network" {
   description = "클러스터가 속한 네트워크 이름"
