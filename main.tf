@@ -41,6 +41,7 @@ resource "google_container_cluster" "cluster" {
       services_secondary_range_name = ip_allocation_policy.value.services_secondary_range_name # 서비스 IP에 사용할 보조 IP 범위 이름입니다.
       cluster_ipv4_cidr_block       = ip_allocation_policy.value.cluster_ipv4_cidr_block       # Pod IP 주소 범위(CIDR 형식)입니다.
       services_ipv4_cidr_block      = ip_allocation_policy.value.services_ipv4_cidr_block      # 서비스 IP 주소 범위(CIDR 형식)입니다.
+      stack_type                    = ip_allocation_policy.value.stack_type                    # 클러스터 IP 스택 타입
     }
   }
 

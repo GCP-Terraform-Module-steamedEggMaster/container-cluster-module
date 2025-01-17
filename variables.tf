@@ -122,10 +122,11 @@ variable "private_ipv6_google_access" {
 variable "ip_allocation_policy" {
   description = "IP 할당 정책입니다."
   type = object({
-    cluster_secondary_range_name  = string
-    services_secondary_range_name = string
-    cluster_ipv4_cidr_block       = string
-    services_ipv4_cidr_block      = string
+    cluster_secondary_range_name  = optional(string, null)   # 선택적 필드
+    services_secondary_range_name = optional(string, null)   # 선택적 필드
+    cluster_ipv4_cidr_block       = optional(string, null)   # 선택적 필드
+    services_ipv4_cidr_block      = optional(string, null)   # 선택적 필드
+    stack_type                    = optional(string, "IPV4") # IPV4_IPV6
   })
   default = null
 }

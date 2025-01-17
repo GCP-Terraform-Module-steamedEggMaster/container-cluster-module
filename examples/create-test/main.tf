@@ -37,7 +37,6 @@ module "workload_identity_pool" {
 module "cluster" {
   source = "../../"
 
-  # 필수 변수 설정
   name       = "test-cluster"
   location   = "asia-northeast3-a"
   network    = module.vpc.self_link
@@ -50,17 +49,24 @@ module "cluster" {
 
   # 애드온 설정
   addons_config = {
-    horizontal_pod_autoscaling = { disabled = false }
+    horizontal_pod_autoscaling = { disabled = true }
     http_load_balancing        = { disabled = false }
-    network_policy_config      = { disabled = true }
+  }
+
+  release_channel {
+    channel = "REGULAR"
+  }
+
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = false
+    master_ipv4_cidr_block  = "172.16.0.0/28"
   }
 
   # IP 할당 정책
   ip_allocation_policy = {
-    cluster_secondary_range_name  = module.subnet.secondary_ip_ranges[0].range_name
-    services_secondary_range_name = module.subnet.secondary_ip_ranges[1].range_name
-    cluster_ipv4_cidr_block       = module.subnet.secondary_ip_ranges[0].ip_cidr_range
-    services_ipv4_cidr_block      = module.subnet.secondary_ip_ranges[1].ip_cidr_range
+    cluster_ipv4_cidr_block  = module.subnet.secondary_ip_ranges[0].ip_cidr_range
+    services_ipv4_cidr_block = module.subnet.secondary_ip_ranges[1].ip_cidr_range
   }
 
   # Workload Identity 설정
