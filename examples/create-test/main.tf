@@ -31,7 +31,7 @@ module "subnet" {
 module "workload_identity_pool" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/workload-identity-pool-module.git?ref=v1.0.0"
 
-  workload_identity_pool_id = "test-pool-id"
+  workload_identity_pool_id = "test-pool"
 }
 
 module "cluster" {
@@ -70,6 +70,6 @@ module "cluster" {
 
   # Workload Identity 설정
   workload_identity_config = {
-    workload_pool = module.workload_identity_pool.workload_identity_pool_domain
+    workload_pool = "${module.workload_identity_pool.project}.svc.id.goog"
   }
 }
