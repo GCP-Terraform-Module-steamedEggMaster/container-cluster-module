@@ -26,7 +26,6 @@ resource "google_container_cluster" "cluster" {
   enable_tpu              = var.enable_tpu              # TPU 사용 여부를 설정합니다.
   enable_legacy_abac      = var.enable_legacy_abac      # 레거시 ABAC 활성화 여부를 설정합니다.
   enable_shielded_nodes   = var.enable_shielded_nodes   # Shielded Nodes 기능 활성화 여부를 설정합니다.
-  enable_autopilot        = var.enable_autopilot        # Autopilot 클러스터 활성화 여부를 설정합니다.
 
   # 로깅 및 모니터링
   logging_service    = var.logging_service    # 로깅 서비스를 설정합니다. (예: Stackdriver 또는 none)

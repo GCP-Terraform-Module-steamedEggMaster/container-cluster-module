@@ -107,12 +107,6 @@ variable "enable_shielded_nodes" {
   default     = true
 }
 
-variable "enable_autopilot" {
-  description = "Autopilot 클러스터 활성화 여부입니다."
-  type        = bool
-  default     = false
-}
-
 variable "private_ipv6_google_access" {
   description = "Google 서비스에 대한 IPv6 접근 허용 여부입니다."
   type        = string
