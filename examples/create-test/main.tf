@@ -42,6 +42,8 @@ module "cluster" {
   network    = module.vpc.self_link
   subnetwork = module.subnet.self_link
 
+  enable_autopilot = false
+
   # 선택적 변수 설정
   description         = "test GKE Cluster"
   deletion_protection = false
