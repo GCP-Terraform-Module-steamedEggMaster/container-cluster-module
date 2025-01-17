@@ -122,169 +122,124 @@ variable "private_ipv6_google_access" {
 variable "ip_allocation_policy" {
   description = "IP 할당 정책입니다."
   type = object({
-    cluster_secondary_range_name  = string
-    services_secondary_range_name = string
-    cluster_ipv4_cidr_block       = string
-    services_ipv4_cidr_block      = string
-    stack_type                    = string
+    cluster_secondary_range_name  = optional(string, null) # 선택적 필드
+    services_secondary_range_name = optional(string, null) # 선택적 필드
+    cluster_ipv4_cidr_block       = optional(string, null) # 선택적 필드
+    services_ipv4_cidr_block      = optional(string, null) # 선택적 필드
+    stack_type                    = optional(string, "IPV4") # 선택적 필드, 기본값 "IPV4"
   })
-  default = {
-    cluster_secondary_range_name  = null
-    services_secondary_range_name = null
-    cluster_ipv4_cidr_block       = null
-    services_ipv4_cidr_block      = null
-    stack_type                    = "IPV4"
-  }
+  default = null
 }
 
 variable "addons_config" {
   description = "애드온 구성입니다."
   type = object({
-    horizontal_pod_autoscaling = object({ disabled = bool })
-    http_load_balancing        = object({ disabled = bool })
-    network_policy_config      = object({ disabled = bool })
+    horizontal_pod_autoscaling = optional(object({ disabled = bool }), null)
+    http_load_balancing        = optional(object({ disabled = bool }), null)
+    network_policy_config      = optional(object({ disabled = bool }), null)
   })
-  default = { ## 이렇게 구성하면 원하는 값만 덮어쓰기 가능
-    horizontal_pod_autoscaling = { disabled = false }
-    http_load_balancing        = { disabled = false }
-    network_policy_config      = { disabled = false }
-  }
+  default = null
 }
 
 variable "vertical_pod_autoscaling" {
   description = "수직 Pod Autoscaling 설정입니다."
   type = object({
-    enabled = bool
+    enabled = optional(bool, false)
   })
-  default = {
-    enabled = false
-  }
+  default = null
 }
 
 variable "workload_identity_config" {
   description = "Workload Identity 설정입니다."
   type = object({
-    workload_pool = string
+    workload_pool = optional(string, null)
   })
-  default = {
-    workload_pool = null
-  }
+  default = null
 }
 
 variable "cluster_autoscaling" {
   description = "클러스터 자동 확장 설정입니다."
   type = object({
-    enabled = bool
-    resource_limits = object({
-      resource_type = string
-      minimum       = number
-      maximum       = number
-    })
+    enabled          = optional(bool, false)
+    resource_limits  = optional(object({
+      resource_type = optional(string, null)
+      minimum       = optional(number, null)
+      maximum       = optional(number, null)
+    }), null)
   })
-  default = {
-    enabled = false
-    resource_limits = {
-      resource_type = null
-      minimum       = null
-      maximum       = null
-    }
-  }
+  default = null
 }
 
 variable "private_cluster_config" {
   description = "Private Cluster 설정입니다."
   type = object({
-    enable_private_nodes    = bool
-    enable_private_endpoint = bool
-    master_ipv4_cidr_block  = string
+    enable_private_nodes    = optional(bool, false)
+    enable_private_endpoint = optional(bool, false)
+    master_ipv4_cidr_block  = optional(string, null)
   })
-  default = {
-    enable_private_nodes    = false
-    enable_private_endpoint = false
-    master_ipv4_cidr_block  = null
-  }
+  default = null
 }
 
 variable "release_channel" {
   description = "Release Channel 설정입니다."
   type = object({
-    channel = string
+    channel = optional(string, null)
   })
-  default = {
-    channel = null
-  }
+  default = null
 }
 
 variable "notification_config" {
   description = "Notification 설정입니다."
   type = object({
-    pubsub = object({
-      enabled = bool
-      topic   = string
-    })
+    pubsub = optional(object({
+      enabled = optional(bool, false)
+      topic   = optional(string, null)
+    }), null)
   })
-  default = {
-    pubsub = {
-      enabled = false
-      topic   = null
-    }
-  }
+  default = null
 }
 
 variable "logging_config" {
   description = "로깅 구성입니다."
   type = object({
-    enable_components = list(string)
+    enable_components = optional(list(string), [])
   })
-  default = {
-    enable_components = []
-  }
+  default = null
 }
 
 variable "monitoring_config" {
   description = "모니터링 구성입니다."
   type = object({
-    enable_components = list(string)
+    enable_components = optional(list(string), [])
   })
-  default = {
-    enable_components = []
-  }
+  default = null
 }
 
 variable "database_encryption" {
   description = "데이터베이스 암호화 설정입니다."
   type = object({
-    state    = string
-    key_name = string
+    state    = optional(string, null)
+    key_name = optional(string, null)
   })
-  default = {
-    state    = "DECRYPTED"
-    key_name = null
-  }
+  default = null
 }
 
 variable "default_snat_status" {
   description = "기본 SNAT 상태 설정입니다."
   type = object({
-    disabled = bool
+    disabled = optional(bool, false)
   })
-  default = {
-    disabled = false
-  }
+  default = null
 }
 
 variable "dns_config" {
   description = "DNS 구성입니다."
   type = object({
-    cluster_dns        = string
-    cluster_dns_scope  = string
-    cluster_dns_domain = string
+    cluster_dns        = optional(string, null)
+    cluster_dns_scope  = optional(string, null)
+    cluster_dns_domain = optional(string, null)
   })
-  default = {
-    cluster_dns        = null
-    cluster_dns_scope  = null
-    cluster_dns_domain = null
-  }
+  default = null
 }
 
 variable "create" {
