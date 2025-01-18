@@ -2,6 +2,7 @@ module "vpc" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/vpc-module.git?ref=v1.0.0"
 
   name = "test-vpc"
+  auto_create_subnetworks = false
 }
 
 module "subnet" {
@@ -31,7 +32,7 @@ module "subnet" {
 module "workload_identity_pool" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/workload-identity-pool-module.git?ref=v1.0.0"
 
-  workload_identity_pool_id = "test-workload-identity-pool"
+  workload_identity_pool_id = "workload-identity-pool"
 }
 
 module "cluster" {
