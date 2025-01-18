@@ -10,19 +10,19 @@ module "subnet" {
   name    = "test-subnetwork"
   network = module.vpc.id
 
-  ip_cidr_range            = "10.0.0.0/24"
+  ip_cidr_range            = "10.0.0.0/18"
   region                   = "asia-northeast3"
   private_ip_google_access = true
 
   secondary_ip_ranges = [
     {
       range_name              = "test-k8s-pod-range"
-      ip_cidr_range           = "10.0.1.0/21"
+      ip_cidr_range           = "10.0.64.0/18"
       reserved_internal_range = null
     },
     {
       range_name              = "test-k8s-service-range"
-      ip_cidr_range           = "10.0.2.0/21"
+      ip_cidr_range           = "10.0.16.0/20"
       reserved_internal_range = null
     }
   ]
@@ -31,7 +31,7 @@ module "subnet" {
 module "workload_identity_pool" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/workload-identity-pool-module.git?ref=v1.0.0"
 
-  workload_identity_pool_id = "test-workload-pool"
+  workload_identity_pool_id = "test-workload"
 }
 
 module "cluster" {
