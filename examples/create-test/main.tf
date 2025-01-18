@@ -59,7 +59,7 @@ module "cluster" {
 
   # IP 할당 정책
   ip_allocation_policy = {
-    cluster_ipv4_cidr_block  = module.subnet.secondary_ip_ranges[0].ip_cidr_range
-    services_ipv4_cidr_block = module.subnet.secondary_ip_ranges[1].ip_cidr_range
+    cluster_secondary_range_name  = module.subnet.secondary_ip_ranges[0].range_name
+    services_secondary_range_name = module.subnet.secondary_ip_ranges[1].range_name
   }
 }
