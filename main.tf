@@ -41,7 +41,9 @@ resource "google_container_cluster" "cluster" {
       cluster_ipv4_cidr_block       = ip_allocation_policy.value.cluster_ipv4_cidr_block       # Pod IP 주소 범위(CIDR 형식)입니다.
       services_ipv4_cidr_block      = ip_allocation_policy.value.services_ipv4_cidr_block      # 서비스 IP 주소 범위(CIDR 형식)입니다.
       stack_type                    = ip_allocation_policy.value.stack_type                    # 클러스터 IP 스택 타입
-    }
+    } ## subnet에서 ip_range를 설정한 경우,
+      ## cidr_block이 아닌 range_name으로 받아서 설정해야함 -> 기존의 secondary subnet을 사용한다는 뜻
+      ## cidr_block을 설정 시, 해당 서브넷을 새로 만드는 듯함. -> 기존 secondary subnet과 겹치는 문제 발생
   }
 
   # 애드온 구성 설정
