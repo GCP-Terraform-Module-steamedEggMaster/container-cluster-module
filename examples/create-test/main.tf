@@ -18,7 +18,7 @@ module "subnet" {
   secondary_ip_ranges = [
     {
       range_name              = "test-k8s-pod-range"
-      ip_cidr_range           = "10.48.0.0/14"
+      ip_cidr_range           = "10.48.0.0/18"
       reserved_internal_range = null
     },
     {
@@ -27,12 +27,6 @@ module "subnet" {
       reserved_internal_range = null
     }
   ]
-}
-
-module "workload_identity_pool" {
-  source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/workload-identity-pool-module.git?ref=v1.0.0"
-
-  workload_identity_pool_id = "workload-identity-pool"
 }
 
 module "cluster" {
@@ -67,10 +61,5 @@ module "cluster" {
   ip_allocation_policy = {
     cluster_ipv4_cidr_block  = module.subnet.secondary_ip_ranges[0].ip_cidr_range
     services_ipv4_cidr_block = module.subnet.secondary_ip_ranges[1].ip_cidr_range
-  }
-
-  # Workload Identity 설정
-  workload_identity_config = {
-    workload_pool = "${module.workload_identity_pool.project}.svc.id.goog"
   }
 }
