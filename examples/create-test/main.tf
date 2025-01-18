@@ -22,7 +22,7 @@ module "subnet" {
     },
     {
       range_name              = "test-k8s-service-range"
-      ip_cidr_range           = "10.0.16.0/20"
+      ip_cidr_range           = "10.0.128.0/20"
       reserved_internal_range = null
     }
   ]
@@ -31,7 +31,7 @@ module "subnet" {
 module "workload_identity_pool" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/workload-identity-pool-module.git?ref=v1.0.0"
 
-  workload_identity_pool_id = "test-workload"
+  workload_identity_pool_id = "test-workload-identity"
 }
 
 module "cluster" {
