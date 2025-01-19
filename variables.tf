@@ -77,6 +77,12 @@ variable "default_max_pods_per_node" {
   default     = 110
 }
 
+variable "remove_default_node_pool" {
+  description = "기본 노드풀 제거 여부, true 설정 시 사용자 정의 노드풀 사용이 가능해짐"
+  type        = bool
+  default     = false
+}
+
 variable "initial_node_count" {
   description = "초기 기본 노드 풀의 노드 수입니다."
   type        = number
@@ -116,10 +122,10 @@ variable "private_ipv6_google_access" {
 variable "ip_allocation_policy" {
   description = "IP 할당 정책입니다."
   type = object({
-    cluster_secondary_range_name  = optional(string, null) # 선택적 필드
-    services_secondary_range_name = optional(string, null) # 선택적 필드
-    cluster_ipv4_cidr_block       = optional(string, null) # 선택적 필드
-    services_ipv4_cidr_block      = optional(string, null) # 선택적 필드
+    cluster_secondary_range_name  = optional(string, null)   # 선택적 필드
+    services_secondary_range_name = optional(string, null)   # 선택적 필드
+    cluster_ipv4_cidr_block       = optional(string, null)   # 선택적 필드
+    services_ipv4_cidr_block      = optional(string, null)   # 선택적 필드
     stack_type                    = optional(string, "IPV4") # 선택적 필드, 기본값 "IPV4"
   })
   default = null
@@ -154,8 +160,8 @@ variable "workload_identity_config" {
 variable "cluster_autoscaling" {
   description = "클러스터 자동 확장 설정입니다."
   type = object({
-    enabled          = optional(bool, false)
-    resource_limits  = optional(object({
+    enabled = optional(bool, false)
+    resource_limits = optional(object({
       resource_type = optional(string, null)
       minimum       = optional(number, null)
       maximum       = optional(number, null)

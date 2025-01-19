@@ -20,8 +20,11 @@ resource "google_container_cluster" "cluster" {
   cluster_ipv4_cidr         = var.cluster_ipv4_cidr         # Pod에 할당될 IP 주소 범위(CIDR 형식)입니다.
   default_max_pods_per_node = var.default_max_pods_per_node # 노드당 생성 가능한 최대 Pod 수를 지정합니다.
 
+  # 노드 풀 초기 구성
+  remove_default_node_pool = var.remove_default_node_pool # 기본 노드풀 제거 여부, true 설정 시 사용자 정의 노드풀 사용이 가능해짐
+  initial_node_count       = var.initial_node_count       # 초기 기본 노드 풀의 노드 수입니다.
+
   # 초기 구성
-  initial_node_count      = var.initial_node_count      # 초기 기본 노드 풀의 노드 수입니다.
   enable_kubernetes_alpha = var.enable_kubernetes_alpha # Kubernetes Alpha 기능 활성화 여부입니다.
   enable_tpu              = var.enable_tpu              # TPU 사용 여부를 설정합니다.
   enable_legacy_abac      = var.enable_legacy_abac      # 레거시 ABAC 활성화 여부를 설정합니다.
@@ -41,9 +44,9 @@ resource "google_container_cluster" "cluster" {
       cluster_ipv4_cidr_block       = ip_allocation_policy.value.cluster_ipv4_cidr_block       # Pod IP 주소 범위(CIDR 형식)입니다.
       services_ipv4_cidr_block      = ip_allocation_policy.value.services_ipv4_cidr_block      # 서비스 IP 주소 범위(CIDR 형식)입니다.
       stack_type                    = ip_allocation_policy.value.stack_type                    # 클러스터 IP 스택 타입
-    } ## subnet에서 ip_range를 설정한 경우,
-      ## cidr_block이 아닌 range_name으로 받아서 설정해야함 -> 기존의 secondary subnet을 사용한다는 뜻
-      ## cidr_block을 설정 시, 해당 서브넷을 새로 만드는 듯함. -> 기존 secondary subnet과 겹치는 문제 발생
+    }                                                                                          ## subnet에서 ip_range를 설정한 경우,
+    ## cidr_block이 아닌 range_name으로 받아서 설정해야함 -> 기존의 secondary subnet을 사용한다는 뜻
+    ## cidr_block을 설정 시, 해당 서브넷을 새로 만드는 듯함. -> 기존 secondary subnet과 겹치는 문제 발생
   }
 
   # 애드온 구성 설정
