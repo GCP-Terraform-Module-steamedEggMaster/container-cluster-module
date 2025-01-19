@@ -61,7 +61,8 @@ GCP에서 Google Kubernetes Engine 클러스터 및 관련 리소스를 생성�
 | `monitoring_service`       | string          | ❌        | `monitoring.googleapis.com/kubernetes` | 모니터링 서비스 설정.                                               |
 | `cluster_ipv4_cidr`        | string          | ❌        | `null`              | Pod 네트워크의 CIDR 범위.                                             |
 | `default_max_pods_per_node`| number          | ❌        | `110`               | 노드당 생성 가능한 최대 Pod 수.                                       |
-| `initial_node_count`       | number          | ❌        | `3`                 | 초기 노드 수.                                                        |
+| `remove_default_node_pool` | bool            | ❌        | `false`             | 초기 기본 노드 삭제 여부.                                                    |
+| `initial_node_count`       | number          | ❌        | `3`                 | 초기 노드 수.                                                      |
 | `enable_kubernetes_alpha`  | bool            | ❌        | `false`             | Kubernetes Alpha 기능 활성화 여부.                                    |
 | `enable_tpu`               | bool            | ❌        | `false`             | TPU 사용 여부.                                                        |
 | `enable_shielded_nodes`    | bool            | ❌        | `true`              | Shielded Nodes 활성화 여부.                                           |
